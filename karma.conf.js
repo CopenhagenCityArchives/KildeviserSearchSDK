@@ -15,10 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'libs/mithril.js',
-      'js/*.js',
-      'tests/mock.js',
-      'tests/*Spec.js'
+      'lib/mithril/mithril.js',
+      'src/models/*.js',
+      'test/mock.js',
+      'test/*Spec.js'
     ],
 
 
