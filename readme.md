@@ -12,7 +12,7 @@ Here's an example:
 The SDK is based on [Mithril.js](https://lhorie.github.io/mithril/) and Twitter Bootstrap 3 for the looks. The TypeAhead is based on the Bootstrap Typeahead in a slightly modified version, which can be found [here] (http://blog.redtigersoftware.com/2013/04/twitter-bootstrap-typeahead-show-all-on.html).
 
 
-External libraries include in the minified file:
+External libraries included in the minified file:
 * bootstrap-typeahead-0len.js
 * mitril.min.js
 
