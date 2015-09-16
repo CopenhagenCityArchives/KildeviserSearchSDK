@@ -2,7 +2,7 @@
 A JavaScript SDK used for searching the collections of Copenhagen City Archives using the public available API.
 
 ##Usage
-Include [the minified file](https://github.com/stumpdk/KildeviserSearchSDK/blob/master/dist/KildeviserSearchSDK.min.js) on your website, and Twitter Bootstrap 3 for the looks.
+Include [the minified file](https://github.com/stumpdk/KildeviserSearchSDK/blob/master/dist/KildeviserSearchSDK.min.js) on your website, and Twitter Bootstrap 2.3 for the looks.
 
 Get the id of the collection you want to search in (in this example we use collection id 2), and put it in a div on your website.
 Here's an example:
