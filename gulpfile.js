@@ -13,11 +13,11 @@
 var opt = {};
 
 
-opt.dest = "";
+opt.dest = "dist";
 opt.prod = "";
 opt.concatFileName = "concat.js";
 opt.minifyFileName = "KildeviserSearchSDK.min.js";
-opt.src = ["js/**/*.js","libs/bootstrap/js/bootstrap-typeahead.js","libs/mithril.min.js","app.js","!" + opt.minifyFileName];
+opt.src = ["src/models/*.js","lib/bootstrap/js/bootstrap-typeahead.js","lib/mithril/mithril.min.js","src/app.js","!" + opt.minifyFileName];
 
 //Dependencies:
 
