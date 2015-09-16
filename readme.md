@@ -17,4 +17,6 @@ External libraries included in the minified file:
 * mitril.min.js
 
 ##The API
-More information about the API used by this SDK can be found here: http://www.kbhkilder.dk/api/info.html and information about the specific collections by using the collection id, here for example collection 2: http://www.kbhkilder.dk/api/collections/2/info
+More information about the API used by this SDK can be found here: http://www.kbhkilder.dk/api/info.html.
+
+Information about the specific collections by using the collection id, here for example collection 2: http://www.kbhkilder.dk/api/collections/2/info
