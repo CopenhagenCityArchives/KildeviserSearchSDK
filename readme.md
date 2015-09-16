@@ -20,3 +20,8 @@ External libraries included in the minified file:
 More information about the API used by this SDK can be found here: http://www.kbhkilder.dk/api/info.html.
 
 Information about the specific collections by using the collection id, here for example collection 2: http://www.kbhkilder.dk/api/collections/2/info
+
+##Building and testing
+To minify the source code run `gulp minify`.
+
+To run the tests (using Karma) run `karma start`.
