@@ -11,10 +11,12 @@ Here's an example:
 
 ##Required libraries
 bootstrap.css
+
 jquery.js
 
 External libraries include in the minified file:
 bootstrap-typeahead-0len.js
+
 mitril.min.js
 
 ##The API
