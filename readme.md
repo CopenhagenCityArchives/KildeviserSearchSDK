@@ -5,11 +5,11 @@ A JavaScript SDK used for searching the collections of Copenhagen City Archives 
 Include [the minified file](http://www.kbhkilder.dk/software/KildeviserSearchSDK/beta/KildeviserSearchSDK.min.js) on your website, and Twitter Bootstrap 2.3 for the looks.
 
 Get the id of the collection you want to search in (in this example we use collection id 2), and put it in a div on your website.
-Here's an example:
+Here's an example for collection id 2 and div with id 'example':
 `KildeViserSearchSDK.init(2, 'example');`
 
 ##Required libraries
-The SDK is based on [Mithril.js](https://lhorie.github.io/mithril/) and Twitter Bootstrap 3 for the looks. The TypeAhead is based on the Bootstrap Typeahead in a slightly modified version, which can be found [here] (http://blog.redtigersoftware.com/2013/04/twitter-bootstrap-typeahead-show-all-on.html).
+The SDK is based on [Mithril.js](https://lhorie.github.io/mithril/) and Twitter Bootstrap 3. The Typeahead is based on the Bootstrap Typeahead in a slightly modified version, which can be found [here] (http://blog.redtigersoftware.com/2013/04/twitter-bootstrap-typeahead-show-all-on.html).
 
 
 External libraries included in the minified file:
@@ -19,7 +19,7 @@ External libraries included in the minified file:
 ##The API
 More information about the API used by this SDK can be found here: http://www.kbhkilder.dk/api/info.html.
 
-Information about the specific collections by using the collection id, here for example collection 2: http://www.kbhkilder.dk/api/collections/2/info
+Information about the specific collections can be found by using the collection id, here for example collection 2: http://www.kbhkilder.dk/api/collections/2/info
 
 ##Building and testing
 To minify the source code run `gulp minify`.
