@@ -89,9 +89,15 @@ var KildeViserSearchSDK = (function(){
 									//Updating the source
 									typeahead.data('typeahead').source = filter.values;
 
-						/*			var focusElm = KildeViserSearch.vm.focus();
-									if(KildeViserSearch.vm.focus() && KildeViserSearch.vm.focus().id == element.id)
-										element.focus();*/
+									//Selecting elements on the list when an arrow key is pressed
+									$(element).on('keydown', function(e){
+											//arrow up and down
+                                            if(e.keyCode == 40 || e.keyCode == 38){
+	                                            $parentDiv = $(element);
+	                                            $innerListItem = $(element).parent().find('li.active').first();
+	                                            $('.typeahead.dropdown-menu').scrollTop($innerListItem.prevAll().length*$innerListItem.height());
+                                            }
+                                    });
 								}
 							}),
 							m("div", {"class": "clearfield", onclick: function(){ /*ilter.selectedValue("");*/ KildeviserSearch.vm.collection.updateFilters(filter.name(), ""); }}, "X"),
