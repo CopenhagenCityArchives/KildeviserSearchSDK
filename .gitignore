@@ -1,6 +1,3 @@
-# dist folder
-/dist/*
-
 # Logs
 logs
 *.log
