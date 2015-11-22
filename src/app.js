@@ -61,53 +61,29 @@ var KildeViserSearchSDK = (function(){
 		})();
 
 		KildeviserSearch.ViewFilter = function(){
-				return KildeviserSearch.vm.collection.filters.map(function(filter, index) {
-					return [
-						m("div", {class:"span12"}, [
-							m("input",{
-								type:"text",
-								id: "filter-" + filter.name(),
-								"class":"span12 typeahead",
-								"data-provide":"typeahead",
-								"autocomplete": "off", 
-								/*"data-items": "100", 
-								"data-minLength": "0",*/
-								//"data-source":filter.valuesStr(), 
-								curFilter: filter.name(),
-								value: filter.selectedValue(),
-								placeholder: filter.placeHolder(),
-								helpText: filter.helpText(),
-								disabled: filter.values.length === 0 ? true : false,
-								onchange: function(e){
-									//KildeViserSearch.vm.collection.filters[index].selectedValue(e.target.value);
-									filter.selectedValue(e.target.value);
-								//	KildeViserSearch.vm.focus(e.target);
-									KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
-								},
-								config: function(element){
-									var typeahead = jQuery(element).typeahead({items: 100, minLength: 0});
-									//Updating the source
-									typeahead.data('typeahead').source = filter.values;
-
-									//Selecting elements on the list when an arrow key is pressed
-									jQuery(element).on('keydown', function(e){
-											//arrow up and down
-                                            if(e.keyCode == 40 || e.keyCode == 38){
-	                                            $parentDiv = jQuery(element);
-	                                            $innerListItem = jQuery(element).parent().find('li.active').first();
-	                                            jQuery('.typeahead.dropdown-menu').scrollTop($innerListItem.prevAll().length*$innerListItem.height());
-                                            }
-                                    });
-								}
-							}),
-							m("div", {"class": "clearfield", onclick: function(){ /*ilter.selectedValue("");*/ KildeviserSearch.vm.collection.updateFilters(filter.name(), ""); }}, "X"),
-							m('p', [
-								m('i', filter.helpText())
-							]),
+			return KildeviserSearch.vm.collection.filters.map(function(filter, index) {
+				return [
+					m("div", {class:"span12"}, [
+						m("select", { 
+							config: function(elem){ console.log('config', elem); jQuery(elem).select2({minimumResultsForSearch: 5, allowClear: true, placeholder: filter.placeHolder(), disabled: filter.values.length > 0 ? false : true});},
+							onchange: function(e){
+								filter.selectedValue(e.target.value);
+								KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
+							},
+							style: "width:80%; max-width:600px;",
+							},
+							[
+							filter.values.map(function(curVal, i){
+								return m("option", {value: curVal}, curVal);	
+							})
 						]),
-						m('.clearfix')
-					];
-				});
+						m('p', [
+							m('i', filter.helpText())
+						]),
+					]),
+					m('.clearfix')
+				];
+			});
 		};
 
 		return KildeviserSearch;
@@ -117,6 +93,21 @@ var KildeViserSearchSDK = (function(){
 
 	pubs.init = function(collectionId, elementId){
 		var kildeviser = new KildeviserSearch(collectionId);
+
+		//Load CSS dependency
+		var cssLink = 'select2.css';
+		var cssId = encodeURIComponent(cssLink);
+		if (!document.getElementById(cssId))
+		{
+		    var head  = document.getElementsByTagName('head')[0];
+		    var link  = document.createElement('link');
+		    link.id   = cssId;
+		    link.rel  = 'stylesheet';
+		    link.type = 'text/css';
+		    link.href = cssLink;
+		    link.media = 'all';
+		    head.appendChild(link);
+		}
 
 		//KildeViserSearch.collectionId = collectionId;
 		m.module(document.getElementById(elementId), {controller: kildeviser.controller, view: kildeviser.view});
