@@ -65,14 +65,14 @@ var KildeViserSearchSDK = (function(){
 				return [
 					m("div", {class:"span12"}, [
 						m("select", { 
-							config: function(elem){ console.log('config', elem); jQuery(elem).select2({minimumResultsForSearch: 5, allowClear: true, placeholder: filter.placeHolder(), disabled: filter.values.length > 0 ? false : true});},
+							config: function(elem){ jQuery(elem).select2({minimumResultsForSearch: 5, allowClear: true, placeholder: filter.placeHolder(), disabled: filter.values.length > 0 ? false : true});},
 							onchange: function(e){
 								filter.selectedValue(e.target.value);
 								KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
 							},
 							style: "width:80%; max-width:600px;",
 							},
-							[
+							[ m("option", {}, ""),
 							filter.values.map(function(curVal, i){
 								return m("option", {value: curVal}, curVal);	
 							})
@@ -95,7 +95,7 @@ var KildeViserSearchSDK = (function(){
 		var kildeviser = new KildeviserSearch(collectionId);
 
 		//Load CSS dependency
-		var cssLink = 'select2.css';
+		var cssLink = 'http://www.kbhkilder.dk/software/KildeviserSearchSDK/select2.css';
 		var cssId = encodeURIComponent(cssLink);
 		if (!document.getElementById(cssId))
 		{
