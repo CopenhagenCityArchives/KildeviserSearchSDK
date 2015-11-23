@@ -17,7 +17,7 @@ opt.dest = "dist";
 opt.prod = "";
 opt.concatFileName = "concat.js";
 opt.minifyFileName = "KildeviserSearchSDK.min.js";
-opt.src = ["src/models/*.js","lib/select2/select2.js","lib/mithril/mithril.min.js","src/app.js","!" + opt.minifyFileName];
+opt.src = ["src/models/*.js","lib/select2/select2.min.js","lib/mithril/mithril.min.js","src/app.js","!" + opt.minifyFileName];
 
 //Dependencies:
 
