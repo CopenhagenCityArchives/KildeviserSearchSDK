@@ -8,19 +8,13 @@ Get the id of the collection you want to search in (in this example we use colle
 Here's an example for collection id 2 and div with id 'example':
 `KildeViserSearchSDK.init(2, 'example');`
 
-Note: To get scrollable drop downs, set the styling of the drop down menu to a max height:
-
-`.dropdown-menu {
-  max-height: 150px;
-  overflow-y: auto;
-}`
 
 ##Required libraries
-The SDK is based on [Mithril.js](https://lhorie.github.io/mithril/) and Twitter Bootstrap 3. The Typeahead is based on the Bootstrap Typeahead in a slightly modified version, which can be found [here] (http://blog.redtigersoftware.com/2013/04/twitter-bootstrap-typeahead-show-all-on.html).
-
+The SDK is based on [Mithril.js](https://lhorie.github.io/mithril/) and Twitter Bootstrap 3.
+The select functionality is based on [Select2](https://select2.github.io/)
 
 External libraries included in the minified file:
-* bootstrap-typeahead-0len.js
+* select2.min.js
 * mitril.min.js
 
 ##The API
