@@ -19,5 +19,5 @@
 				url = url + filterValue.name + '=' + filterValue.value + '&';
 			}
 		}
-		return url.substring(0,url.length-1);
+		return encodeURI(url.substring(0,url.length-1));
 	};
