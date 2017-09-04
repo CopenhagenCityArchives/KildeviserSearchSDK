@@ -5,8 +5,8 @@
 		this.name = m.prop('test name');
 		this.id = m.prop(id);
 		this.description = m.prop('');
-		this.resourceUrl = "http://www.kbhkilder.dk/1508/stable/api/collections/";
-		this.searchUrl = "http://www.kbhkilder.dk/1508/stable/api/data/" + id;
+		this.resourceUrl = "https://www.kbhkilder.dk/1508/stable/api/collections/";
+		this.searchUrl = "https://www.kbhkilder.dk/1508/stable/api/data/" + id;
 		this.filters = m.prop([]);
 		this.values = m.prop([]);
 	};

@@ -12,8 +12,8 @@
 		this.gui_name = m.prop(data.gui_name);
 		this.helpText = m.prop(data.gui_description);
 		this.placeHolder = m.prop(data.gui_name);
-		this.valuesUrl = 'http://www.kbhkilder.dk/1508/stable/api/metadata/' + collectionId + '/' + data.name;
-		
+		this.valuesUrl = 'https://www.kbhkilder.dk/1508/stable/api/metadata/' + collectionId + '/' + data.name;
+
 		this.selectedValue = m.prop("");
 		this.values = [];
 		this.valuesStr = m.prop('');
@@ -65,12 +65,12 @@
 			this.values.length = 0;
 			this.valuesStr(this._valuesToString(this.values));
 			this.selectedValue("");
-		}		
+		}
 	};
 
 	Filter.prototype._buildUrl = function(filterValues){
 		var builder = new URLBuilder();
-		var url = builder.buildUrl(this.valuesUrl, filterValues);		
+		var url = builder.buildUrl(this.valuesUrl, filterValues);
 		return url;
 	};
 

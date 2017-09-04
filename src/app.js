@@ -15,7 +15,7 @@ var KildeViserSearchSDK = (function(){
 					m("button",{class:"regularsubmit", onclick: function(){KildeviserSearch.vm.search(); } },'Find'),
 					m("p", KildeviserSearch.vm.status())
 				]);
-		};	
+		};
 
 		KildeviserSearch.vm = (function(){
 			    var vm = {};
@@ -36,14 +36,14 @@ var KildeViserSearchSDK = (function(){
 		    				//location.href = 'http://www.kbharkiv.dk/kildeviser/#?collection=' + KildeViserSearch.collection.id() + '&item=' + data[0].id;
 		    					if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
 		    						//It's Safari, redirect!
-		    						window.location.assign('http://www.kbharkiv.dk/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id);	
+		    						window.location.assign('https://www.kbharkiv.dk/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id);
 		    					}
-		    					var url = 'http://www.kbharkiv.dk/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id;
+		    					var url = 'https://www.kbharkiv.dk/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id;
 
-								var newWin = window.open(url);             
+								var newWin = window.open(url);
 /*
-								if(!newWin || newWin.closed || typeof newWin.closed=='undefined') 
-								{ 
+								if(!newWin || newWin.closed || typeof newWin.closed=='undefined')
+								{
 									window.location.assign('http://www.kbharkiv.dk/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id);
 								}
 */
@@ -64,7 +64,7 @@ var KildeViserSearchSDK = (function(){
 			return KildeviserSearch.vm.collection.filters.map(function(filter, index) {
 				return [
 					m("div", {class:"span12"}, [
-						m("select", { 
+						m("select", {
 							config: function(elem){ jQuery(elem).select2({minimumResultsForSearch: 5, theme: 'classic', allowClear: true, placeholder: filter.placeHolder(), disabled: filter.values.length > 0 ? false : true, 'language': { noResults: function(){ return 'Ingen resultater';}}});},
 							onchange: function(e){
 								filter.selectedValue(e.target.value);
@@ -74,7 +74,7 @@ var KildeViserSearchSDK = (function(){
 							},
 							[ m("option", {}, ""),
 							filter.values.map(function(curVal, i){
-								return m("option", {value: curVal}, curVal);	
+								return m("option", {value: curVal}, curVal);
 							})
 						]),
 						m('p', [
@@ -88,14 +88,14 @@ var KildeViserSearchSDK = (function(){
 
 		return KildeviserSearch;
 	};
-	
+
 	var pubs = {};
 
 	pubs.init = function(collectionId, elementId){
 		var kildeviser = new KildeviserSearch(collectionId);
 
 		//Load CSS dependency
-		var cssLink = 'http://www.kbhkilder.dk/software/KildeviserSearchSDK/select2.css';
+		var cssLink = 'https://www.kbhkilder.dk/software/KildeviserSearchSDK/select2.css';
 		var cssId = encodeURIComponent(cssLink);
 		if (!document.getElementById(cssId))
 		{
