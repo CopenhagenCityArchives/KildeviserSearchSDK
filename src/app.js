@@ -31,23 +31,17 @@ var KildeViserSearchSDK = (function(){
 					vm.status("");
 		    		this.collection.search().then(function(data){
 		    			if(data.length > 0){
-		    				var urlBuilder = new URLBuilder();
-		    				//location.href= urlBuilder.buildUrl('http://www.kbharkiv.dk/kildeviser/#!?collection=' + KildeViserSearch.collection.id() + '&search=1&', KildeViserSearch.collection._getFilterValues());
-		    				//location.href = 'http://www.kbharkiv.dk/kildeviser/#?collection=' + KildeViserSearch.collection.id() + '&item=' + data[0].id;
-		    					if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
-		    						//It's Safari, redirect!
-		    						window.location.assign('https://www.kbharkiv.dk/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id);
-		    					}
-		    					var url = 'https://www.kbharkiv.dk/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id;
+							var urlBuilder = new URLBuilder();
+							
+							var kildeviserDomain =  window.location.domain.indexOf('kbharkiv') != -1 ? 'https://www.kbharkiv.dk' : 'https://stadsarkivet.frederiksberg.dk';
 
-								var newWin = window.open(url);
-/*
-								if(!newWin || newWin.closed || typeof newWin.closed=='undefined')
-								{
-									window.location.assign('http://www.kbharkiv.dk/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id);
-								}
-*/
+							if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
+								//It's Safari, redirect!
+								window.location.assign(kildeviserDomain + '/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id);
+							}
+							var url = kildeviserDomain + '/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id;
 
+							var newWin = window.open(url);
 		    			}
 		    			else{
 		    				vm.status("Ingen resultater fundet");
