@@ -26,20 +26,20 @@ var KildeViserSearchSDK = (function(){
 
 			        this.collection.get();
 		    	};
-
+ 
 		    	vm.search = function(){
 					vm.status("");
 		    		this.collection.search().then(function(data){
 		    			if(data.length > 0){
 							var urlBuilder = new URLBuilder();
 							
-							var kildeviserDomain =  window.location.domain.indexOf('kbharkiv') != -1 ? 'https://www.kbharkiv.dk' : 'https://stadsarkivet.frederiksberg.dk';
-
+							var kildeviserHostname =  window.location.hostname.indexOf('kbharkiv') != -1 ? 'https://www.kbharkiv.dk' : 'https://stadsarkivet.frederiksberg.dk';
+ 
 							if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
 								//It's Safari, redirect!
-								window.location.assign(kildeviserDomain + '/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id);
+								window.location.assign(kildeviserHostname + '/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id);
 							}
-							var url = kildeviserDomain + '/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id;
+							var url = kildeviserHostname + '/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id;
 
 							var newWin = window.open(url);
 		    			}
