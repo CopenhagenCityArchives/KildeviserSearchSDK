@@ -1,3 +1,6 @@
+dist
+oldDists
+
 # Logs
 logs
 *.log
@@ -74,5 +77,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-dist
-oldDists
+
