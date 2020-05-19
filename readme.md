@@ -23,6 +23,8 @@ More information about the API used by this SDK can be found here: http://www.kb
 Information about the specific collections can be found by using the collection id, here for example collection 2: http://www.kbhkilder.dk/api/collections/2/info
 
 ##Building and testing
-To minify the source code run `gulp minify`.
+To build and test the code run `gulp watch`, and go to http://localhost:8080/examples/example.html
+
+To minify the source code run `gulp build`.
 
 To run the tests (using Karma) run `karma start`.
