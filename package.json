@@ -1,7 +1,7 @@
 {
-  "name": "GulpTasks",
+  "name": "kildeviser-search-sdk",
   "version": "0.0.1",
-  "description": "Basic useful Gulp tasks",
+  "description": "Search SDK for Kildeviser",
   "main": "gulpfile.js",
   "dependencies": {
     "gulp": "^4.0.2",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "R:\\Git\\GulpTasks.git"
+    "url": "https://github.com/CopenhagenCityArchives/KildeviserSearchSDK.git"
   },
   "author": "Bo Henriksen",
   "license": "ISC"
