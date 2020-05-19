@@ -59,7 +59,7 @@ var KildeViserSearchSDK = (function(){
 				return [
 					m("div", {class:"span12"}, [
 						m("select", {
-							config: function(elem){ jQuery(elem).select2({minimumResultsForSearch: 5, theme: 'classic', allowClear: true, placeholder: filter.placeHolder(), disabled: filter.values.length > 0 ? false : true, 'language': { noResults: function(){ return 'Ingen resultater';}}});},
+							config: function(elem){ $(elem).select2({minimumResultsForSearch: 5, theme: 'classic', allowClear: true, placeholder: filter.placeHolder(), disabled: filter.values.length > 0 ? false : true, 'language': { noResults: function(){ return 'Ingen resultater';}}});},
 							onchange: function(e){
 								filter.selectedValue(e.target.value);
 								KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
