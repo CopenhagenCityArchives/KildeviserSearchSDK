@@ -68,7 +68,7 @@ function build() {
 
 // Copies assets into dist
 function copyAssets(){
-    return src('./lib/select2/select2.css')
+    return src('./lib/select2/css/select2.css')
         .pipe(dest('./dist/'));
 }
 
