@@ -12,7 +12,7 @@ var KildeViserSearchSDK = (function(){
 		KildeviserSearch.view = function(ctrl){
 				return m("div", {class:"kildeviser"}, [
 					KildeviserSearch.ViewFilter(),
-					m("button",{class:"regularsubmit", onclick: function(){KildeviserSearch.vm.search(); } },'Find'),
+					m("button",{class:["btn", "btn-primary", "regularsubmit"], onclick: function(){KildeviserSearch.vm.search(); } },'Find'),
 					m("p", KildeviserSearch.vm.status())
 				]);
 		};
@@ -57,7 +57,7 @@ var KildeViserSearchSDK = (function(){
 		KildeviserSearch.ViewFilter = function(){
 			// find jQuery object with select2
 			let jQueryObject = $;
-			if (!jQueryObject.fn.select2 && jQuery) {
+			if (!$ || !$.fn.select2 && jQuery) {
 				jQueryObject = jQuery;
 			}
 			return KildeviserSearch.vm.collection.filters.map(function(filter, index) {
