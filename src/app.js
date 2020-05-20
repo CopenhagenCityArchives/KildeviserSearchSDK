@@ -55,11 +55,16 @@ var KildeViserSearchSDK = (function(){
 		})();
 
 		KildeviserSearch.ViewFilter = function(){
+			// find jQuery object with select2
+			let jQueryObject = $;
+			if (!jQueryObject.fn.select2 && jQuery) {
+				jQueryObject = jQuery;
+			}
 			return KildeviserSearch.vm.collection.filters.map(function(filter, index) {
 				return [
 					m("div", {class:"span12"}, [
 						m("select", {
-							config: function(elem){ $(elem).select2({minimumResultsForSearch: 5, theme: 'classic', allowClear: true, placeholder: filter.placeHolder(), disabled: filter.values.length > 0 ? false : true, 'language': { noResults: function(){ return 'Ingen resultater';}}});},
+							config: function(elem){ jQueryObject(elem).select2({minimumResultsForSearch: 5, theme: 'classic', allowClear: true, placeholder: filter.placeHolder(), disabled: filter.values.length > 0 ? false : true, 'language': { noResults: function(){ return 'Ingen resultater';}}});},
 							onchange: function(e){
 								filter.selectedValue(e.target.value);
 								KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
