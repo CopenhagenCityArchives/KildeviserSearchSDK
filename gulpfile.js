@@ -5,6 +5,9 @@
 // Gulp
 const { src, dest, series, parallel, watch } = require('gulp');
 
+// for arguments
+const util = require('gulp-util');
+
 // Minifier
 var minifier = require('gulp-minifier');
 
@@ -18,11 +21,25 @@ var connect = require( 'gulp-connect');
 // Options
 ///////////////////////////////////////////////////////////////////////////////
 
+// Setup profile
+var profile = util.env.profile;
+
+if (!profile) {
+    profile = "kbharkiv";
+}
+
+if (profile != "kbharkiv" && profile != "frederiksberg") {
+    throw new Error("Invalid profile '"+profile+"'");
+} else {
+    console.log('Using profile: ' + profile);
+}
+
 // Production
 var prod = {}
 prod.dest = "dist";
 prod.fileName = "KildeviserSearchSDK.min.js";
 prod.src = [
+    "profile/"+profile+".js",
     "src/models/*.js",
     "lib/select2/js/select2.min.js",
     "lib/mithril/mithril.min.js",
@@ -35,6 +52,7 @@ var dev = {}
 dev.dest = "dist";
 dev.fileName = "KildeviserSearchSDK.js";
 dev.src = [
+    "profile/"+profile+".js",
     "src/models/*.js",
     "lib/select2/js/select2.js",
     "lib/mithril/mithril.js",

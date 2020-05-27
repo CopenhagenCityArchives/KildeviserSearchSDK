@@ -12,7 +12,7 @@ var KildeViserSearchSDK = (function(){
 		KildeviserSearch.view = function(ctrl){
 				return m("div", {class:"kildeviser"}, [
 					KildeviserSearch.ViewFilter(),
-					m("button",{class:["btn", "btn-primary", "regularsubmit"], onclick: function(){KildeviserSearch.vm.search(); } },'Find'),
+					m("button",{class:"btn btn-primary regularsubmit", onclick: function(){KildeviserSearch.vm.search(); } },'Find'),
 					m("p", KildeviserSearch.vm.status())
 				]);
 		};
@@ -33,7 +33,7 @@ var KildeViserSearchSDK = (function(){
 		    			if(data.length > 0){
 							var urlBuilder = new URLBuilder();
 							
-							var kildeviserHostname =  window.location.hostname.indexOf('kbharkiv') != -1 ? 'https://www.kbharkiv.dk' : 'https://stadsarkivet.frederiksberg.dk';
+							var kildeviserHostname = ProfileConfiguration().hostname;
  
 							if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
 								//It's Safari, redirect!

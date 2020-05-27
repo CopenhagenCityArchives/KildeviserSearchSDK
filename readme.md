@@ -28,3 +28,14 @@ To build and test the code run `gulp watch`, and go to http://localhost:8080/exa
 To minify the source code run `gulp build`.
 
 To run the tests (using Karma) run `karma start`.
+
+### Profiles
+
+Build profiles are selected with the flag `--profile <PROFILE>`, for example `gulp build --profile kbharkiv`.
+
+By default `kbharkiv` is selected.
+
+In the `./profile` directory exists configuration files named by the profile names, each defining a
+`ProfileConfiguration` function returning a configuration object for the profile.
+
+The valid profile names are hardcoded into `gulpfile.js`.
