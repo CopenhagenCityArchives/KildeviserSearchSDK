@@ -56,7 +56,7 @@ var KildeViserSearchSDK = (function(){
 
 		KildeviserSearch.ViewFilter = function(){
 			// find jQuery object with select2
-			let jQueryObject = $;
+			var jQueryObject = $;
 			if (!$ || !$.fn.select2 && jQuery) {
 				jQueryObject = jQuery;
 			}
