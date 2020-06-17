@@ -13,7 +13,7 @@ var KildeViserSearchSDK = (function(){
 			var children = [
 				KildeviserSearch.ViewFilter(),
 				m("button",{class:"btn btn-primary regularsubmit", onclick: function(){KildeviserSearch.vm.search(); } },'Find'),
-				m("p", {class: KildeviserSearch.vm.statusClass()}, KildeviserSearch.vm.status())
+				m("p", {role: 'status', class: KildeviserSearch.vm.statusClass()}, KildeviserSearch.vm.status())
 			]
 			return m("div", {class:"kildeviser"}, children);
 		};
