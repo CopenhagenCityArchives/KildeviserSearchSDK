@@ -95,7 +95,7 @@ var KildeViserSearchSDK = (function(){
 								filter.selectedValue(e.target.value);
 								KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
 							},
-							style: "width:80%; max-width:600px;",
+							style: "width: 100%;",
 							'aria-labelledby': labelId
 						}, [
 							m("option", {}, ""),
