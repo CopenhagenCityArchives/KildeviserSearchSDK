@@ -73,6 +73,8 @@ var KildeViserSearchSDK = (function(){
 				jQueryObject = jQuery;
 			}
 			return KildeviserSearch.vm.collection.filters.map(function(filter, index) {
+				var labelId = 'collection-' + KildeviserSearch.vm.collection.id() + '-filter-' + filter.name() + '-label';
+
 				return [
 					m("div", {class:"span12"}, [
 						m("select", {
@@ -94,13 +96,16 @@ var KildeViserSearchSDK = (function(){
 								KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
 							},
 							style: "width:80%; max-width:600px;",
+							'aria-labelledby': labelId
 						}, [
 							m("option", {}, ""),
 							filter.values.map(function(curVal, i) {
 								return m("option", {value: curVal}, curVal);
 							})
 						]),
-						m('p', [
+						m('p', {
+							id: labelId
+						}, [
 							m('i', filter.helpText())
 						]),
 					]),
