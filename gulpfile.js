@@ -127,4 +127,4 @@ exports.build = series(build, buildCss);
 exports.buildDev = series(buildDev, buildCssDev);
 
 exports.serve = startWebserver;
-exports.watch = series(startWebserver, watcher);
+exports.watch = series(buildDev, buildCssDev, startWebserver, watcher);
