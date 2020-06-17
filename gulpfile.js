@@ -116,7 +116,7 @@ function startWebserver(callback){
 
 // Returns a watcher function
 function watcher(){
-    return watch(['src/**/*.*'], { delay: 500 }, series(buildDev, buildCssDev));
+    return watch(['src/**/*.*', 'profile/*.*'], { delay: 500 }, series(buildDev, buildCssDev));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
