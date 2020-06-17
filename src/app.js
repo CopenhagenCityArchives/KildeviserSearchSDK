@@ -64,15 +64,27 @@ var KildeViserSearchSDK = (function(){
 				return [
 					m("div", {class:"span12"}, [
 						m("select", {
-							config: function(elem){ jQueryObject(elem).select2({minimumResultsForSearch: 5, theme: 'classic', allowClear: true, placeholder: filter.placeHolder(), disabled: filter.values.length > 0 ? false : true, 'language': { noResults: function(){ return 'Ingen resultater';}}});},
-							onchange: function(e){
+							config: function(elem) {
+								jQueryObject(elem)
+									.select2({
+										minimumResultsForSearch: 5,
+										theme: 'bootstrap4',
+										allowClear: true,
+										placeholder: filter.placeHolder(),
+										disabled: filter.values.length > 0 ? false : true,
+										'language': {
+											noResults: function(){ return 'Ingen resultater'; }
+										}
+									});
+							},
+							onchange: function(e) {
 								filter.selectedValue(e.target.value);
 								KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
 							},
 							style: "width:80%; max-width:600px;",
-							},
-							[ m("option", {}, ""),
-							filter.values.map(function(curVal, i){
+						}, [
+							m("option", {}, ""),
+							filter.values.map(function(curVal, i) {
 								return m("option", {value: curVal}, curVal);
 							})
 						]),
@@ -92,23 +104,6 @@ var KildeViserSearchSDK = (function(){
 
 	pubs.init = function(collectionId, elementId){
 		var kildeviser = new KildeviserSearch(collectionId);
-
-		//Load CSS dependency
-		var cssLink = 'https://www.kbhkilder.dk/software/KildeviserSearchSDK/select2.css';
-		var cssId = encodeURIComponent(cssLink);
-		if (!document.getElementById(cssId))
-		{
-		    var head  = document.getElementsByTagName('head')[0];
-		    var link  = document.createElement('link');
-		    link.id   = cssId;
-		    link.rel  = 'stylesheet';
-		    link.type = 'text/css';
-		    link.href = cssLink;
-		    link.media = 'all';
-		    head.appendChild(link);
-		}
-
-		//KildeViserSearch.collectionId = collectionId;
 		m.module(document.getElementById(elementId), {controller: kildeviser.controller, view: kildeviser.view});
 	};
 

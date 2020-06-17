@@ -4,9 +4,12 @@
   "description": "Search SDK for Kildeviser",
   "main": "gulpfile.js",
   "dependencies": {
+    "@ttskch/select2-bootstrap4-theme": "^1.4.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
-    "gulp-minifier": "^0.1.4"
+    "gulp-minifier": "^0.1.4",
+    "mithril": "^0.2.5",
+    "select2": "^4.0.13"
   },
   "devDependencies": {
     "gulp-clean": "^0.3.2",
