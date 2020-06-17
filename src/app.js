@@ -82,7 +82,7 @@ var KildeViserSearchSDK = (function(){
 								jQueryObject(elem)
 									.select2({
 										minimumResultsForSearch: 5,
-										theme: 'bootstrap4',
+										theme: ProfileConfiguration().select2Theme,
 										allowClear: true,
 										placeholder: filter.placeHolder(),
 										disabled: filter.values.length > 0 ? false : true,
