@@ -9,17 +9,29 @@ var KildeViserSearchSDK = (function(){
 			KildeviserSearch.vm.init(KildeviserSearch.collectionId);
 		};
 
-		KildeviserSearch.view = function(ctrl){
-				return m("div", {class:"kildeviser"}, [
-					KildeviserSearch.ViewFilter(),
-					m("button",{class:"btn btn-primary regularsubmit", onclick: function(){KildeviserSearch.vm.search(); } },'Find'),
-					m("p", KildeviserSearch.vm.status())
-				]);
+		KildeviserSearch.view = function(ctrl) {
+			var children = [
+				KildeviserSearch.ViewFilter(),
+				m("button",{class:"btn btn-primary regularsubmit", onclick: function(){KildeviserSearch.vm.search(); } },'Find'),
+				m("p", {class: KildeviserSearch.vm.statusClass()}, KildeviserSearch.vm.status())
+			]
+			return m("div", {class:"kildeviser"}, children);
 		};
 
 		KildeviserSearch.vm = (function(){
-			    var vm = {};
-			    vm.status = m.prop("");
+				var vm = {};
+
+				vm.status = m.prop("");
+				vm.statusClass = m.prop("d-none");
+				vm.setStatus = function(message) {
+					vm.status(message);
+					if (!message) {
+						vm.statusClass("d-none");
+					} else {
+						vm.statusClass("");
+					}
+				};
+
 		    	vm.init = function(collectionId) {
 					this.collection = new Collection(collectionId);
 			        vm.collection = this.collection;
@@ -28,7 +40,7 @@ var KildeViserSearchSDK = (function(){
 		    	};
  
 		    	vm.search = function(){
-					vm.status("");
+					vm.setStatus("");
 		    		this.collection.search().then(function(data){
 		    			if(data.length > 0){
 							var urlBuilder = new URLBuilder();
@@ -44,7 +56,7 @@ var KildeViserSearchSDK = (function(){
 							var newWin = window.open(url);
 		    			}
 		    			else{
-		    				vm.status("Ingen resultater fundet");
+		    				vm.setStatus("Ingen resultater fundet");
 		    			}
 		    		}.bind(this));
 		    	};
