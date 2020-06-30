@@ -72,15 +72,18 @@ var KildeViserSearchSDK = (function(){
 			}
 
 			// assign to each filter, which filters requires it
-			for (var filter of KildeviserSearch.vm.collection.filters) {
-				for (var requiredFilterName of filter.requiredLevels) {
-					for (var requiredFilter of KildeviserSearch.vm.collection.filters.filter(function(reqFilter) {
-						return reqFilter.name() == requiredFilterName 
-					})) {
-						requiredFilter.requiredByFilters.push(filter);
-					}
-				}
-			}
+			KildeviserSearch.vm.collection.filters.map(function(filter) {
+				filter.requriedByFilters = [];
+			});
+			KildeviserSearch.vm.collection.filters.forEach(function(filter) {
+				var requiredFilters = KildeviserSearch.vm.collection.filters.filter(function(reqFilter) {
+					return filter.requiredLevels.indexOf(reqFilter.name()) != -1 
+				});
+
+				requiredFilters.forEach(function(reqFilter) {
+					reqFilter.requiredByFilters.push(filter)
+				});
+			});
 
 			return KildeviserSearch.vm.collection.filters.map(function(filter, index) {
 				var labelId = 'collection-' + KildeviserSearch.vm.collection.id() + '-filter-' + filter.name() + '-label';
@@ -103,10 +106,10 @@ var KildeViserSearchSDK = (function(){
 										KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
 
 										// clear dependant filters on select
-										for (var requiredByFilter of filter.requiredByFilters) {
+										filter.requiredByFilters.forEach(function(requiredByFilter) {
 											requiredByFilter.disabled(true);
 											$('#select-' + requiredByFilter.name()).val("");
-										}
+										});
 									});
 
 									// setup WAI-ARIA attributes when opening dropdown
@@ -119,10 +122,10 @@ var KildeViserSearchSDK = (function(){
 
 									// clear dependant filters on clear
 									$(elem).on('select2:clear', function() {
-										for (var requiredByFilter of filter.requiredByFilters) {
+										filter.requiredByFilters.forEach(function(requiredByFilter) {
 											requiredByFilter.disabled(true);
 											$('#select-' + requiredByFilter.name()).val("");
-										}
+										});
 
 										m.redraw();
 									});
