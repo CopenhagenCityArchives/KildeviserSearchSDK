@@ -2,22 +2,24 @@
 		Filter - Represents a single filter
 	*/
 	var Filter = function(collectionId, data){
-		if(data.required_levels !== undefined && data.required_levels !== false){
+		if (data.required_levels !== undefined && data.required_levels !== false){
 			this.requiredLevels = data.required_levels;
-		}
-		else{
+		} else {
 			this.requiredLevels = [];
 		}
+
 		this.name = m.prop(data.name);
 		this.gui_name = m.prop(data.gui_name);
 		this.helpText = m.prop(data.gui_description);
 		this.placeHolder = m.prop(data.gui_name);
 		this.valuesUrl = 'https://www.kbhkilder.dk/api/metadata/' + collectionId + '/' + data.name;
+		this.disabled = m.prop(true);
 
 		this.selectedValue = m.prop("");
-		this.values = [];
+		this.values = m.prop([]);
 		this.valuesStr = m.prop('');
 		this.order = data.order;
+		this.requiredByFilters = []
 	};
 
 	//Returns wheter the given array holds all required filter values or not
@@ -41,27 +43,34 @@
 
 	//Updates the values based on the given filter values
 	Filter.prototype.updateValues = function(filterValues){
-		if(this._requiredFiltersSet(filterValues)){
-
+		if (this._requiredFiltersSet(filterValues)) {
 			m.request({method: "GET", url: this._buildUrl(filterValues), dataType: "jsonp"})
-			.then(function(data){
-				this.values = [];
+			.then(function(data) {
+				var values = [];
+
 				for(var i = 0; i < data.length; i++){
-					this.values.push(data[i].text);
+					values.push(data[i].text);
 				}
+
+				this.values(values);
 				this.valuesStr(this._valuesToString(this.values));
 
 				//Resets the selected value, if it is not given in the values array
-				if(this.values.indexOf(this.selectedValue()) == -1){
+				if (values.indexOf(this.selectedValue()) == -1) {
 					this.selectedValue("");
 				}
-				if(this.values.length == 1){
+
+				if (values.length == 1) {
 					this.selectedValue(this.values[0]);
 				}
 
+				if (values.length > 0) {
+					this.disabled(false);
+				} else {
+					this.disabled(true);
+				}
 			}.bind(this));
-		}
-		else{
+		} else {
 			this.values.length = 0;
 			this.valuesStr(this._valuesToString(this.values));
 			this.selectedValue("");

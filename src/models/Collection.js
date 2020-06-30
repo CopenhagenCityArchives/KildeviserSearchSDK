@@ -52,14 +52,14 @@
 		this.filters[index].selectedValue(filterValue);
 
 		//Don't update if the filter value is not a possible value
-		if(this.filters[index].selectedValue() !== "" && this.filters[index].values.indexOf(filterValue) == -1)
+		if(this.filters[index].selectedValue() !== "" && this.filters[index].values().indexOf(filterValue) == -1)
 			return;
 
 		//Getting selected values from all filters
 		var filterValues = 	this._getFilterValues();
 
 		//Updating the values of the filter itself, if it has no values
-		if(this.filters[index].values.length == 0){
+		if(this.filters[index].values().length == 0){
 			this.filters[index].updateValues(filterValues);
 		}
 
