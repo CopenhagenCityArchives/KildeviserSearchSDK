@@ -35,6 +35,7 @@ if (profile != "kbharkiv" && profile != "frederiksberg") {
 }
 
 var srcCss = [
+    './profile/' +profile+ '.css',
     './node_modules/select2/dist/css/select2.css',
     './node_modules/@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.css'
 ];
