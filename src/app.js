@@ -86,14 +86,14 @@ var KildeViserSearchSDK = (function(){
 			});
 
 			return KildeviserSearch.vm.collection.filters.map(function(filter, index) {
-				var labelId = 'collection-' + KildeviserSearch.vm.collection.id() + '-filter-' + filter.name() + '-label';
+				var baseId = 'collection-' + KildeviserSearch.vm.collection.id() + '-filter-' + filter.name();
 				return [
 					m("div", {class:"span12"}, [
-						m("div", { id:'select2-dropdown-' + filter.name() }),
+						m("div", { id: 'select2-dropdown-' + baseId }),
 						m("select", {
 							config: function(elem, isInitialized, context) {
 								if (!isInitialized) {
-									$(elem).attr('id', 'select-' + filter.name());
+									$(elem).attr('id', baseId + '-select');
 
 									// setup event handler only on initialization
 									$(elem).on('select2:select', function(e) {
@@ -108,15 +108,15 @@ var KildeViserSearchSDK = (function(){
 										// clear dependant filters on select
 										filter.requiredByFilters.forEach(function(requiredByFilter) {
 											requiredByFilter.disabled(true);
-											$('#select-' + requiredByFilter.name()).val("");
+											$('#collection-' + KildeviserSearch.vm.collection.id() + '-filter-' + requiredByFilter.name() + '-select').val("");
 										});
 									});
 
 									// setup WAI-ARIA attributes when opening dropdown
 									$(elem).on('select2:open', function() {
-										var $searchbox = $('#select2-dropdown-' + filter.name()).find('[role="searchbox"]');
+										var $searchbox = $('#select2-dropdown-' + baseId).find('[role="searchbox"]');
 										$searchbox.attr('aria-label', 'Filtrér værdier for ' + filter.placeHolder());
-										var $listbox = $('#select2-dropdown-' + filter.name()).find('[role="listbox"]');
+										var $listbox = $('#select2-dropdown-' + baseId).find('[role="listbox"]');
 										$listbox.attr('aria-label', 'Værdier for ' + filter.placeHolder());
 									});
 
@@ -124,7 +124,7 @@ var KildeViserSearchSDK = (function(){
 									$(elem).on('select2:clear', function() {
 										filter.requiredByFilters.forEach(function(requiredByFilter) {
 											requiredByFilter.disabled(true);
-											$('#select-' + requiredByFilter.name()).val("");
+											$('#collection-' + KildeviserSearch.vm.collection.id() + '-filter-' + requiredByFilter.name() + '-select').val("");
 										});
 
 										m.redraw();
@@ -143,7 +143,7 @@ var KildeViserSearchSDK = (function(){
 									theme: ProfileConfiguration().select2Theme,
 									closeOnSelect: true,
 									allowClear: true,
-									dropdownParent: $('#select2-dropdown-' + filter.name()),
+									dropdownParent: $('#select2-dropdown-' + baseId),
 									placeholder: filter.placeHolder(),
 									disabled: filter.disabled(),
 									'language': {
@@ -169,7 +169,7 @@ var KildeViserSearchSDK = (function(){
 							})
 						]),
 						m('p', {
-							id: labelId
+							id: baseId + '-label'
 						}, [
 							m('em', filter.helpText())
 						]),
