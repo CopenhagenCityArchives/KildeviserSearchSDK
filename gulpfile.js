@@ -6,7 +6,7 @@
 const { src, dest, series, parallel, watch } = require('gulp');
 
 // for arguments
-const util = require('gulp-util');
+const minimist = require('minimist');
 
 // Minifier
 var minifier = require('gulp-minifier');
@@ -21,8 +21,9 @@ var connect = require( 'gulp-connect');
 // Options
 ///////////////////////////////////////////////////////////////////////////////
 
-// Setup profile
-var profile = util.env.profile;
+// Setup profile based on CLI flag --profile
+var argv = minimist(process.argv.slice(2));
+var profile = argv.profile;
 
 if (!profile) {
     profile = "kbharkiv";
