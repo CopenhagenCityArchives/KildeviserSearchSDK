@@ -25,3 +25,7 @@ To start a development server, run
 
     gulp watch
 
+Profiles
+--------
+Set different profiles using the --profile flag while building.
+Set profile preferences in the js-files in /profiles
