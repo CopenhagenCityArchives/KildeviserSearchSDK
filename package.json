@@ -5,7 +5,7 @@
   "main": "gulpfile.js",
   "dependencies": {
     "@ttskch/select2-bootstrap4-theme": "^1.4.0",
-    "mithril": "^0.2.8",
+    "mithril": "^1.1.7",
     "select2": "^4.0.13"
   },
   "devDependencies": {
