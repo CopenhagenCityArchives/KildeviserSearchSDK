@@ -1,6 +1,6 @@
 var ProfileConfiguration = function() {
     return {
-        hostname: "https://new.kbharkiv.dk",
+        hostname: "https://kbharkiv.dk",
         select2Theme: 'bootstrap4'
     }
 };
