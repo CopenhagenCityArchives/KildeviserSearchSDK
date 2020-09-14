@@ -12,7 +12,7 @@
 		this.gui_name = m.prop(data.gui_name);
 		this.helpText = m.prop(data.gui_description);
 		this.placeHolder = m.prop(data.gui_name);
-		this.valuesUrl = 'https://www.kbhkilder.dk/api/metadata/' + collectionId + '/' + data.name;
+		this.valuesUrl = ProfileConfiguration().apiUrl + 'metadata/' + collectionId + '/' + data.name;
 		this.disabled = m.prop(true);
 
 		this.selectedValue = m.prop("");
