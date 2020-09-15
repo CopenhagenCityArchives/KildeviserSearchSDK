@@ -45,13 +45,13 @@ var KildeViserSearchSDK = (function(){
 		    			if(data.length > 0){
 							var urlBuilder = new URLBuilder();
 							
-							var kildeviserHostname = ProfileConfiguration().hostname;
+							var kildeviserHostname = ProfileConfiguration().kildeviserUrl;
  
 							if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1){
 								//It's Safari, redirect!
-								window.location.assign(kildeviserHostname + '/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id);
+								window.location.assign(kildeviserHostname + '#?collection=' + this.collection.id() + '&item=' + data[0].id);
 							}
-							var url = kildeviserHostname + '/kildeviser/#?collection=' + this.collection.id() + '&item=' + data[0].id;
+							var url = kildeviserHostname + '#?collection=' + this.collection.id() + '&item=' + data[0].id;
 
 							var newWin = window.open(url);
 		    			}

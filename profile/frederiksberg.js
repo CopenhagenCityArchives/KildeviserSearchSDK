@@ -1,6 +1,6 @@
 var ProfileConfiguration = function() {
     return {
-        hostname: 'https://stadsarkivet.frederiksberg.dk',
+        kildeviserUrl: 'https://stadsarkivet.frederiksberg.dk/kildeviser/',
         select2Theme: 'classic',
         apiUrl: 'https://api.kbharkiv.dk/'
     }
