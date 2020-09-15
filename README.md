@@ -11,21 +11,16 @@ Get dependencies with `npm install`
 Building
 --------
 
-    gulp build
-
-or
-
-    guilp buildDev
+Run `gulp build` or `gulp buildDev`
 
 
 Development
 -----------
 
-To start a development server, run
-
-    gulp watch
+To start a development server, run `gulp watch`
 
 Profiles
 --------
+Two profiles are supported: *kbharkiv* and *frederiksberg*.
 Set different profiles using the --profile flag while building.
 Set profile preferences in the js-files in /profiles

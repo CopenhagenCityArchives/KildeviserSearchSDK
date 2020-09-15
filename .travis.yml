@@ -12,7 +12,15 @@ install:
     - gulp --version
     
 script:
-    - gulp build 
+    # build kbharkiv
+    - gulp build --profile kbharkiv
+    - mkdir ./dist-kbharkiv
+    - mv ./dist ./dist-kbharkiv
+
+    # build frederiksberg
+    - gulp build --frederiksberg
+    - mkdir ./dist-frederiksberg
+    - mv ./dist ./dist-frederiksberg
 
 deploy:
     - provider: s3
@@ -20,7 +28,7 @@ deploy:
       secret_access_key: ${AWS_SECRET_ACCESS_KEY}
       bucket: static.kbharkiv.dk
       cache_control: 'no-cache'
-      local_dir: dist
+      local_dir: dist-kbharkiv
       upload_dir: kildeviser-sdk
       acl: public_read
       region: eu-west-1
@@ -29,3 +37,17 @@ deploy:
         branch: master
       edge: true
       cleanup: false
+    - provider: s3
+      access_key_id: ${AWS_ACCESS_KEY}
+      secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+      bucket: static.kbharkiv.dk
+      cache_control: 'no-cache'
+      local_dir: dist-frederiksberg
+      upload_dir: kildeviser-sdk/frederiksberg
+      acl: public_read
+      region: eu-west-1
+      on:
+        repo: CopenhagenCityArchives/KildeviserSearchSDK
+        branch: master
+      edge: true
+      cleanup: false      
