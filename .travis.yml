@@ -17,7 +17,7 @@ script:
     - mv ./dist ./dist-kbharkiv
 
     # build frederiksberg
-    - gulp build --frederiksberg
+    - gulp build --profile frederiksberg
     - mv ./dist ./dist-frederiksberg
 
 deploy:
