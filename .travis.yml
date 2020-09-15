@@ -14,12 +14,10 @@ install:
 script:
     # build kbharkiv
     - gulp build --profile kbharkiv
-    - mkdir ./dist-kbharkiv
     - mv ./dist ./dist-kbharkiv
 
     # build frederiksberg
     - gulp build --frederiksberg
-    - mkdir ./dist-frederiksberg
     - mv ./dist ./dist-frederiksberg
 
 deploy:
@@ -43,7 +41,7 @@ deploy:
       bucket: static.kbharkiv.dk
       cache_control: 'no-cache'
       local_dir: dist-frederiksberg
-      upload_dir: kildeviser-sdk/frederiksberg
+      upload_dir: kildeviser-sdk-frederiksberg
       acl: public_read
       region: eu-west-1
       on:
