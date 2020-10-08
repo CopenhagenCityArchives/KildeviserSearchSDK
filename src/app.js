@@ -36,7 +36,21 @@ var KildeViserSearchSDK = (function(){
 					this.collection = new Collection(collectionId);
 			        vm.collection = this.collection;
 
-			        this.collection.get();
+					this.collection.get(function() {
+						// assign to each filter, which filters requires it
+						vm.collection.filters.map(function(filter) {
+							filter.requriedByFilters = [];
+						});
+						vm.collection.filters.forEach(function(filter) {
+							var requiredFilters = vm.collection.filters.filter(function(reqFilter) {
+								return filter.requiredLevels.indexOf(reqFilter.name()) != -1 
+							});
+
+							requiredFilters.forEach(function(reqFilter) {
+								reqFilter.requiredByFilters.push(filter)
+							});
+						});
+					});
 		    	};
  
 		    	vm.search = function(){
@@ -64,6 +78,7 @@ var KildeViserSearchSDK = (function(){
 		    	return vm;
 		})();
 
+
 		KildeviserSearch.ViewFilter = function(){
 			// find jQuery object with select2
 			var $ = $;
@@ -71,19 +86,71 @@ var KildeViserSearchSDK = (function(){
 				$ = jQuery;
 			}
 
-			// assign to each filter, which filters requires it
-			KildeviserSearch.vm.collection.filters.map(function(filter) {
-				filter.requriedByFilters = [];
-			});
-			KildeviserSearch.vm.collection.filters.forEach(function(filter) {
-				var requiredFilters = KildeviserSearch.vm.collection.filters.filter(function(reqFilter) {
-					return filter.requiredLevels.indexOf(reqFilter.name()) != -1 
+			var clearFilter = function(requiredByFilter) {
+				requiredByFilter.disabled(true);
+				var baseId = 'collection-' + KildeviserSearch.vm.collection.id() + '-filter-' + requiredByFilter.name();
+				var elem = $('#' + baseId + '-select')
+				$(elem).val(null).trigger('change');
+				setupSelect(requiredByFilter, baseId, elem)
+			}
+
+			/**
+			 * Setup the select2 element
+			 */
+			var setupSelect = function(filter, baseId, elem) {
+				$(elem).attr('id', baseId + '-select');
+
+				$(elem).select2({
+					minimumResultsForSearch: 5,
+					theme: ProfileConfiguration().select2Theme,
+					closeOnSelect: true,
+					allowClear: true,
+					dropdownParent: $('#select2-dropdown-' + baseId),
+					placeholder: filter.placeHolder(),
+					disabled: filter.disabled(),
+					'language': {
+						noResults: function(){ return 'Ingen resultater'; }
+					}
 				});
 
-				requiredFilters.forEach(function(reqFilter) {
-					reqFilter.requiredByFilters.push(filter)
+				// setup event handler only on initialization
+				$(elem).off('select2:select')
+				$(elem).on('select2:select', function(e) {
+					// we only want to restore focus to filters that will cause a redraw
+					// ie. filters that are not required by any other filters
+					if (filter.requiredByFilters !== undefined && filter.requiredByFilters.length > 0) {
+						filter.restoreFocus = true;
+					}
+					filter.selectedValue(e.target.value);
+					KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
+
+					// clear dependant filters on select
+					filter.requiredByFilters.forEach(clearFilter);
 				});
-			});
+
+				// setup WAI-ARIA attributes when opening dropdown
+				$(elem).off('select2:open')
+				$(elem).on('select2:open', function() {
+					var $searchbox = $('#select2-dropdown-' + baseId).find('[role="searchbox"]');
+					$searchbox.attr('aria-label', 'Filtrér værdier for ' + filter.placeHolder());
+					var $listbox = $('#select2-dropdown-' + baseId).find('[role="listbox"]');
+					$listbox.attr('aria-label', 'Værdier for ' + filter.placeHolder());
+				});
+
+				// clear dependant filters on clear
+				$(elem).off('select2:clear')
+				$(elem).on('select2:clear', function() {
+					filter.requiredByFilters.forEach(clearFilter);
+				});
+
+				// WAI-ARIA conformity
+				var $textbox = $(elem).next().find('.select2-selection__rendered');
+				if ($textbox.find('.select2-selection__placeholder').length > 0) {
+					$textbox.attr('aria-label', 'Vælg ' + filter.placeHolder() + ": Intet valgt.")
+				} else {
+					$textbox.attr('aria-label', 'Vælg ' + filter.placeHolder() + ': ' + $(elem).val())
+				}
+			}
 
 			return KildeviserSearch.vm.collection.filters.map(function(filter, index) {
 				var baseId = 'collection-' + KildeviserSearch.vm.collection.id() + '-filter-' + filter.name();
@@ -92,73 +159,7 @@ var KildeViserSearchSDK = (function(){
 						m("div", { id: 'select2-dropdown-' + baseId }),
 						m("select", {
 							config: function(elem, isInitialized, context) {
-								if (!isInitialized) {
-									$(elem).attr('id', baseId + '-select');
-
-									// setup event handler only on initialization
-									$(elem).on('select2:select', function(e) {
-										// we only want to restore focus to filters that will cause a redraw
-										// ie. filters that are not required by any other filters
-										if (filter.requiredByFilters !== undefined && filter.requiredByFilters.length > 0) {
-											filter.restoreFocus = true;
-										}
-										filter.selectedValue(e.target.value);
-										KildeviserSearch.vm.collection.updateFilters(filter.name(), filter.selectedValue());
-
-										// clear dependant filters on select
-										filter.requiredByFilters.forEach(function(requiredByFilter) {
-											requiredByFilter.disabled(true);
-											$('#collection-' + KildeviserSearch.vm.collection.id() + '-filter-' + requiredByFilter.name() + '-select').val("");
-										});
-									});
-
-									// setup WAI-ARIA attributes when opening dropdown
-									$(elem).on('select2:open', function() {
-										var $searchbox = $('#select2-dropdown-' + baseId).find('[role="searchbox"]');
-										$searchbox.attr('aria-label', 'Filtrér værdier for ' + filter.placeHolder());
-										var $listbox = $('#select2-dropdown-' + baseId).find('[role="listbox"]');
-										$listbox.attr('aria-label', 'Værdier for ' + filter.placeHolder());
-									});
-
-									// clear dependant filters on clear
-									$(elem).on('select2:clear', function() {
-										filter.requiredByFilters.forEach(function(requiredByFilter) {
-											requiredByFilter.disabled(true);
-											$('#collection-' + KildeviserSearch.vm.collection.id() + '-filter-' + requiredByFilter.name() + '-select').val("");
-										});
-
-										m.redraw();
-									});
-								} else if (filter.restoreFocus) {
-									// restore focus to a filter that was selected, and caused the redraw
-									filter.restoreFocus = undefined;
-									setTimeout(function() {
-										$(elem).focus();
-									})
-								}
-
-								// we reset select2 on each redraw
-								$(elem).select2({
-									minimumResultsForSearch: 5,
-									theme: ProfileConfiguration().select2Theme,
-									closeOnSelect: true,
-									allowClear: true,
-									dropdownParent: $('#select2-dropdown-' + baseId),
-									placeholder: filter.placeHolder(),
-									disabled: filter.disabled(),
-									'language': {
-										noResults: function(){ return 'Ingen resultater'; }
-									}
-								});
-
-								// WAI-ARIA conformity
-								var $textbox = $(elem).next().find('.select2-selection__rendered');
-								if ($textbox.find('.select2-selection__placeholder').length > 0) {
-									$textbox.attr('aria-label', 'Ingen valgt værdi for ' + filter.placeHolder())
-								} else {
-									$textbox.attr('aria-label', 'Valgte værdi for ' + filter.placeHolder())
-								}
-
+								setupSelect(filter, baseId, elem)
 							},
 							style: "width: 100%;",
 							'aria-label': 'Vælg ' + filter.placeHolder()

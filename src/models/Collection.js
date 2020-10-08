@@ -12,13 +12,16 @@
 	};
 
 	//Retrieves collection info and filters
-	Collection.prototype.get = function(){
+	Collection.prototype.get = function(callback){
 		var url = this.resourceUrl + this.id();
 
 		m.request({method: "GET", url: url, dataType: "jsonp"})
 			.then(function(data){
 				this._loadData(data[0]);
 				this.filters[0].updateValues([]);
+				if (callback) {
+					callback()
+				}
 			}.bind(this));
 	};
 
