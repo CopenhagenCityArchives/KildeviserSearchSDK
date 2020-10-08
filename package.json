@@ -6,7 +6,7 @@
   "dependencies": {
     "@ttskch/select2-bootstrap4-theme": "^1.4.0",
     "mithril": "^0.2.8",
-    "select2": "^4.0.13"
+    "select2": "^4.1.0-beta.1"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
