@@ -45,6 +45,7 @@ var srcJs = [
     "profile/"+profile+".js",
     "src/models/*.js",
     "./node_modules/select2/dist/js/select2.js",
+    "./node_modules/select2/dist/js/i18n/da.js",
     "./node_modules/mithril/mithril.js",
     "src/app.js"
 ];
