@@ -113,6 +113,11 @@ var KildeViserSearchSDK = (function(){
 					}
 				});
 
+				if (filter.restoreFocus) {
+					$(elem).focus();
+					filter.restoreFocus = false;
+				}
+
 				// setup event handler only on initialization
 				$(elem).off('select2:select')
 				$(elem).on('select2:select', function(e) {
