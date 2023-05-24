@@ -13,11 +13,11 @@ install:
     
 script:
     # build kbharkiv
-    - gulp build --profile kbharkiv
+    - gulp build -p kbharkiv
     - mv ./dist ./dist-kbharkiv
 
     # build frederiksberg
-    - gulp build --profile frederiksberg
+    - gulp build -p frederiksberg
     - mv ./dist ./dist-frederiksberg
 
 deploy:

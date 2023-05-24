@@ -21,9 +21,14 @@ var connect = require( 'gulp-connect');
 // Options
 ///////////////////////////////////////////////////////////////////////////////
 
-// Setup profile based on CLI flag --profile
-var argv = minimist(process.argv.slice(2));
-var profile = argv.profile;
+// Setup profile based on CLI flag -p
+var knownOptions = {
+    string: 'p',
+    default: { p:'kbharkiv' }
+  };
+
+var argv = minimist(process.argv.slice(2), knownOptions);
+var profile = argv.p;
 
 if (!profile) {
     profile = "kbharkiv";
