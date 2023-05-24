@@ -4,9 +4,10 @@ dist: xenial
 language: node_js
 
 node_js:
-- 'lts/*'
+  - 17
 
 install:
+    - nvm use 17
     - npm install -g gulp-cli
     - npm install
     - gulp --version
