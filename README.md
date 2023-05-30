@@ -5,7 +5,7 @@ KildeviserSearchSDK
 About
 -----
 KildeviserSDK is a Javascript-script that enable users to find units avaiable through [APACS](https://github.com/copenhagencityarchives/apacs).
-This is done by showing two or three forms in which the user selects related filters. When all filters is selected, the application redirects to the corresponding page in [Kildeviseren](https://github.com/copenhagencityarchives/kildeviseren)
+This is done by showing two or three forms in which the user selects related filters. When all filters is selected, the application redirects to the corresponding page in [Kildeviseren](https://github.com/copenhagencityarchives/kildeviseren).
 
 Installation
 ------------
