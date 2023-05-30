@@ -24,3 +24,14 @@ Profiles
 Two profiles are supported: *kbharkiv* and *frederiksberg*.
 Set different profiles using the --profile flag while building.
 Set profile preferences in the js-files in /profiles
+
+Usage
+-----
+To use the application add the following:
+ ```
+  //initialize the application
+  $(function(){
+    KildeViserSearchSDK.init(11, 'my-div');
+  });
+  ```
+  Where "11" is the id of collection you need to search in, and "my-div" is the div/container which will hold the forms.
