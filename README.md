@@ -27,16 +27,16 @@ To start a development server, run `gulp watch`
 Profiles
 --------
 Two profiles are supported: *kbharkiv* and *frederiksberg*.
-Set different profiles using the -p (for example 'gulp build -p frederiksberg') flag while building.
+Set different profiles using the -p (for example ``gulp build -p frederiksberg``) flag while building.
 Set profile preferences in the js-files in /profiles
 
 Usage
 -----
 To use the application add the following:
- ```
-  //initialize the application
-  $(function(){
-    KildeViserSearchSDK.init(11, 'my-div');
-  });
-  ```
-  Where "11" is the id of collection you need to search in, and "my-div" is the div/container which will hold the forms.
+```
+//initialize the application
+$(function(){
+  KildeViserSearchSDK.init(11, 'my-div');
+});
+```
+Where "11" is the id of collection you need to search in, and "my-div" is the div/container which will hold the forms.
