@@ -16,7 +16,7 @@ script:
     # build kbharkiv
     - gulp build -p kbharkiv
     - mv ./dist ./dist-kbharkiv
-    
+
     # build staging
     - gulp build -p kbharkiv-staging
     - mv ./dist ./dist-kbharkiv-staging
@@ -59,7 +59,7 @@ deploy:
       secret_access_key: ${AWS_SECRET_ACCESS_KEY}
       bucket: static.kbharkiv.dk
       cache_control: 'no-cache'
-      local_dir: dist-kbharkiv
+      local_dir: dist-kbharkiv-staging
       upload_dir: kildeviser-staging-sdk
       acl: public_read
       region: eu-west-1
