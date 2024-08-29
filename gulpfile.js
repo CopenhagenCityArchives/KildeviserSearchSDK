@@ -34,7 +34,7 @@ if (!profile) {
     profile = "kbharkiv";
 }
 
-if (profile != "kbharkiv" && profile != "frederiksberg") {
+if (profile != "kbharkiv" && profile != "frederiksberg" && profile != "kbharkiv-staging") {
     throw new Error("Invalid profile '"+profile+"'");
 } else {
     console.log('Using profile: ' + profile);

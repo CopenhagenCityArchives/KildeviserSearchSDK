@@ -16,6 +16,10 @@ script:
     # build kbharkiv
     - gulp build -p kbharkiv
     - mv ./dist ./dist-kbharkiv
+    
+    # build staging
+    - gulp build -p kbharkiv-staging
+    - mv ./dist ./dist-kbharkiv-staging
 
     # build frederiksberg
     - gulp build -p frederiksberg
@@ -50,3 +54,17 @@ deploy:
         branch: master
       edge: true
       cleanup: false      
+    - provider: s3
+      access_key_id: ${AWS_ACCESS_KEY}
+      secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+      bucket: static.kbharkiv.dk
+      cache_control: 'no-cache'
+      local_dir: dist-kbharkiv
+      upload_dir: kildeviser-staging-sdk
+      acl: public_read
+      region: eu-west-1
+      on:
+        repo: CopenhagenCityArchives/KildeviserSearchSDK
+        branch: master
+      edge: true
+      cleanup: false
