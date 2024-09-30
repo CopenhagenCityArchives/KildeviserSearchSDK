@@ -1,0 +1,82 @@
+name: NodeJS with Gulp
+
+on:
+  push:
+    branches: [ "staging" ]
+  pull_request:
+    branches: [ "staging" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [17]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: Install node and gulp cli
+      run: |
+        npm install -g gulp-cli
+        npm install 
+        gulp --version
+        
+    - name: Run gulp
+      run: |
+       gulp build -p kbharkiv
+       mv ./dist ./dist-kbharkiv
+       
+       gulp build -p kbharkiv-staging
+       mv ./dist ./dist-kbharkiv-staging
+       
+       gulp build -p frederiksberg
+       mv ./dist ./dist-frederiksberg
+        
+    - name: Upload S3 - kbharkiv
+      uses: shallwefootball/upload-s3-action@v1.3.3
+      with:
+       # aws key id
+       aws_key_id: ${{ secrets.AWS_KEY_ID }}
+       # aws secret access key
+       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+       # aws bucket name
+       aws_bucket: ${{ secrets.AWS_BUCKET }}
+       # directory to upload
+       source_dir: dist-kbharkiv
+       # destination directory for upload
+       destination_dir: kildeviser-sdk
+       
+    - name: Upload S3 - frederiksberg
+      uses: shallwefootball/upload-s3-action@v1.3.3
+      with:
+       # aws key id
+       aws_key_id: ${{ secrets.AWS_KEY_ID }}
+       # aws secret access key
+       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+       # aws bucket name
+       aws_bucket: ${{ secrets.AWS_BUCKET }}
+       # directory to upload
+       source_dir: dist-frederiksberg
+       # destination directory for upload
+       destination_dir: kildeviser-sdk-frederiksberg
+       
+    - name: Upload S3 - kbharkiv staging
+      uses: shallwefootball/upload-s3-action@v1.3.3
+      with:
+       # aws key id
+       aws_key_id: ${{ secrets.AWS_KEY_ID }}
+       # aws secret access key
+       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+       # aws bucket name
+       aws_bucket: ${{ secrets.AWS_BUCKET }}
+       # directory to upload
+       source_dir: dist-kbharkiv-staging
+       # destination directory for upload
+       destination_dir: kildeviser-staging-sdk   
