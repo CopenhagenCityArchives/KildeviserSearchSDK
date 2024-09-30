@@ -2,9 +2,9 @@ name: NodeJS with Gulp
 
 on:
   push:
-    branches: [ "staging" ]
+    branches: [ "staging", "gh-actions" ]
   pull_request:
-    branches: [ "staging" ]
+    branches: [ "staging", "gh-actions" ]
 
 jobs:
   build:
@@ -51,7 +51,7 @@ jobs:
        # directory to upload
        source_dir: dist-kbharkiv
        # destination directory for upload
-       destination_dir: kildeviser-sdk
+       destination_dir: action_test/kildeviser-sdk
        
     - name: Upload S3 - frederiksberg
       uses: shallwefootball/upload-s3-action@v1.3.3
@@ -65,7 +65,7 @@ jobs:
        # directory to upload
        source_dir: dist-frederiksberg
        # destination directory for upload
-       destination_dir: kildeviser-sdk-frederiksberg
+       destination_dir: action_test/kildeviser-sdk-frederiksberg
        
     - name: Upload S3 - kbharkiv staging
       uses: shallwefootball/upload-s3-action@v1.3.3
@@ -79,4 +79,4 @@ jobs:
        # directory to upload
        source_dir: dist-kbharkiv-staging
        # destination directory for upload
-       destination_dir: kildeviser-staging-sdk   
+       destination_dir: action_test/kildeviser-staging-sdk   
