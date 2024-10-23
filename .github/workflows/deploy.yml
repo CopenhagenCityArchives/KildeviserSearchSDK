@@ -56,7 +56,7 @@ jobs:
     - name: "Upload to S3: ${{ vars.AWS_BUCKET }} / ${{ vars.DEPLOY_DIR_FREDERIKSBERG }}"
       if: ${{github.ref_name == 'production'}}
       env:
-        LOCAL_DIR: ${{ vars.DEPLOY_DIR_FREDERIKSBERG }}
+        LOCAL_DIR: ${{ vars.LOCAL_DIR_FREDERIKSBERG }}
         AWS_BUCKET: ${{ vars.AWS_BUCKET }}
         DEPLOY_DIR: ${{ vars.DEPLOY_DIR_FREDERIKSBERG }}
       run: |
