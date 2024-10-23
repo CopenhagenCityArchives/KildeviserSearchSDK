@@ -10,17 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [17]
-
     steps:
     - uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 17
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 17
         
     - name: Install node and gulp cli
       run: |
@@ -38,45 +34,27 @@ jobs:
        
        gulp build -p frederiksberg
        mv ./dist ./dist-frederiksberg
+       
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+       role-to-assume: arn:aws:iam::282251075226:role/gh-deploy-s3-cloudfront
+       aws-region: eu-west-1
+
+    - name: "Upload to S3: ${{ vars.AWS_BUCKET }} / ${{ vars.DEPLOY_DIR_KBHARKIV }}"
+      env:
+        LOCAL_DIR: ${{ vars.LOCAL_DIR_KBHARKIV }}
+        AWS_BUCKET: ${{ vars.AWS_BUCKET }}
+        DEPLOY_DIR: ${{ vars.DEPLOY_DIR_KBHARKIV }}
+      run: |
+        aws s3 sync "$LOCAL_DIR" "s3://${AWS_BUCKET}/${DEPLOY_DIR}"
         
-    - name: Upload S3 - kbharkiv
-      uses: shallwefootball/upload-s3-action@v1.3.3
-      with:
-       # aws key id
-       aws_key_id: ${{ secrets.AWS_KEY_ID }}
-       # aws secret access key
-       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-       # aws bucket name
-       aws_bucket: ${{ secrets.AWS_BUCKET }}
-       # directory to upload
-       source_dir: dist-kbharkiv
-       # destination directory for upload
-       destination_dir: action_test/kildeviser-sdk
-       
-    - name: Upload S3 - frederiksberg
-      uses: shallwefootball/upload-s3-action@v1.3.3
-      with:
-       # aws key id
-       aws_key_id: ${{ secrets.AWS_KEY_ID }}
-       # aws secret access key
-       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-       # aws bucket name
-       aws_bucket: ${{ secrets.AWS_BUCKET }}
-       # directory to upload
-       source_dir: dist-frederiksberg
-       # destination directory for upload
-       destination_dir: action_test/kildeviser-sdk-frederiksberg
-       
-    - name: Upload S3 - kbharkiv staging
-      uses: shallwefootball/upload-s3-action@v1.3.3
-      with:
-       # aws key id
-       aws_key_id: ${{ secrets.AWS_KEY_ID }}
-       # aws secret access key
-       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-       # aws bucket name
-       aws_bucket: ${{ secrets.AWS_BUCKET }}
-       # directory to upload
-       source_dir: dist-kbharkiv-staging
-       # destination directory for upload
-       destination_dir: action_test/kildeviser-staging-sdk   
+    - name: "Upload to S3: ${{ vars.AWS_BUCKET }} / ${{ vars.DEPLOY_DIR_FREDERIKSBERG }}"
+      if: ${{github.ref_name == production}}
+      env:
+        LOCAL_DIR: ${{ vars.DEPLOY_DIR_FREDERIKSBERG }}
+        AWS_BUCKET: ${{ vars.AWS_BUCKET }}
+        DEPLOY_DIR: ${{ vars.DEPLOY_DIR_FREDERIKSBERG }}
+      run: |
+        aws s3 sync "$LOCAL_DIR" "s3://${AWS_BUCKET}/${DEPLOY_DIR}"  
+  
