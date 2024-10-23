@@ -1,0 +1,62 @@
+name: NodeJS with Gulp
+
+on:
+  push:
+    branches: [ "staging", "gh-actions" ]
+  pull_request:
+    branches: [ "staging", "gh-actions" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: ${{ github.REF_NAME }}
+
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js 17
+      uses: actions/setup-node@v4
+      with:
+        node-version: 17
+        
+    - name: Install node and gulp cli
+      run: |
+        npm install -g gulp-cli
+        npm install 
+        gulp --version
+        
+    - name: Run gulp
+      run: |
+       gulp build -p kbharkiv
+       mv ./dist ./dist-kbharkiv
+       
+       gulp build -p kbharkiv-staging
+       mv ./dist ./dist-kbharkiv-staging
+       
+       gulp build -p frederiksberg
+       mv ./dist ./dist-frederiksberg
+       
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+       role-to-assume: arn:aws:iam::282251075226:role/gh-deploy-s3-cloudfront
+       aws-region: eu-west-1
+
+    - name: "Upload to S3: ${{ vars.AWS_BUCKET }} / ${{ vars.DEPLOY_DIR_KBHARKIV }}"
+      env:
+        LOCAL_DIR: ${{ vars.LOCAL_DIR_KBHARKIV }}
+        AWS_BUCKET: ${{ vars.AWS_BUCKET }}
+        DEPLOY_DIR: ${{ vars.DEPLOY_DIR_KBHARKIV }}
+      run: |
+        aws s3 sync "$LOCAL_DIR" "s3://${AWS_BUCKET}/${DEPLOY_DIR}"
+        
+    - name: "Upload to S3: ${{ vars.AWS_BUCKET }} / ${{ vars.DEPLOY_DIR_FREDERIKSBERG }}"
+      if: ${{github.ref_name == 'production'}}
+      env:
+        LOCAL_DIR: ${{ vars.DEPLOY_DIR_FREDERIKSBERG }}
+        AWS_BUCKET: ${{ vars.AWS_BUCKET }}
+        DEPLOY_DIR: ${{ vars.DEPLOY_DIR_FREDERIKSBERG }}
+      run: |
+        aws s3 sync "$LOCAL_DIR" "s3://${AWS_BUCKET}/${DEPLOY_DIR}"  
+  
