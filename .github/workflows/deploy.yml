@@ -2,9 +2,9 @@ name: NodeJS with Gulp
 
 on:
   push:
-    branches: [ "staging", "gh-actions" ]
+    branches: [ "staging", "production" ]
   pull_request:
-    branches: [ "staging", "gh-actions" ]
+    branches: [ "staging", "production" ]
 
 jobs:
   build:
