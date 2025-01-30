@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/CopenhagenCityArchives/KildeviserSearchSDK.svg?branch=master)](https://travis-ci.org/CopenhagenCityArchives/KildeviserSearchSDK)
-
 KildeviserSearchSDK
 ===================
 About
